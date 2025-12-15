@@ -190,6 +190,17 @@ int main() {
     pool.submit({OpType::DEL, "a", ""});
     pool.submit({OpType::GET, "a", ""});
     pool.submit({OpType::GET, "b", ""});
+
+    //make million requests
+    for(int i = 0; i < 1000000; i++){
+        pool.submit({OpType::SET, "key" + std::to_string(i), "value" + std::to_string(i)});
+    }
+    for(int i = 0; i < 1000000; i++){
+        pool.submit({OpType::GET, "key" + std::to_string(i), ""});
+    }
+    for(int i = 0; i < 1000000; i++){
+        pool.submit({OpType::DEL, "key" + std::to_string(i), ""});
+    }
  
     pool.shutdown();
  
